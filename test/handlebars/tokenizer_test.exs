@@ -16,6 +16,27 @@ defmodule Handlebars.TokenizerTest do
           { :ok, [{:mustache, 1, 'foo'},  {:text, ' something '}, {:mustache, 1, 'bar'}] }
     end
 
+    test "over more than one line" do
+      assert T.tokenize("foo\n{{bar}}") == 
+          { :ok, [{:text, 'foo\n'}, {:mustache, 2, 'bar'}] }
+    end
+
+    test "expression over more than one line" do
+      string = '''
+foo {{ bar
+
+baz }}
+{{ foo }}
+'''
+      assert T.tokenize(string) == { :ok, [
+        {:text, 'foo '}, 
+        {:mustache, 1, ' bar\n\nbaz '}, 
+        {:text, '\n'},
+        {:mustache, 2, ' foo '}, 
+        {:text, '\n'}
+        ] }
+    end
+
     test "unescaping with &" do
       assert T.tokenize("{{&bar}}") == { :ok, [{:escaped_mustache, 1, 'bar'}] }
     end

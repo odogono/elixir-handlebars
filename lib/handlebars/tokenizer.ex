@@ -51,10 +51,14 @@ defmodule Handlebars.Tokenizer do
       end
     end
 
+    # an escaped mustache opening tag - we simply add this to the buffer and continue
     defp tokenize('\\{{' ++ t, line, opts,buffer,acc) do
       tokenize t, line, opts, [?{,?{|buffer], acc
     end
 
+    defp tokenize('\n' ++ t, line, opts, buffer, acc) do
+      tokenize t, line + 1, opts, [?\n|buffer], acc
+    end
 
     defp tokenize([h|t], line, opts, buffer, acc) do
       tokenize t, line, opts, [h|buffer], acc
