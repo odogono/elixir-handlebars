@@ -12,8 +12,10 @@ defmodule Handlebars.TokenizerTest do
 
     test "basic" do
       assert T.tokenize("{{foo}}") == { :ok, [{:mustache, 1, 'foo'}] }
-      assert T.tokenize("{{foo}} something {{bar}}") == 
-          { :ok, [{:mustache, 1, 'foo'},  {:text, ' something '}, {:mustache, 1, 'bar'}] }
+      assert T.tokenize("{{foo}} something {{bar}}") == { :ok, [
+        {:mustache, 1, 'foo'},  
+        {:text, ' something '}, 
+        {:mustache, 1, 'bar'} ]}
     end
 
     test "over more than one line" do
@@ -46,7 +48,22 @@ baz }}
     end
 
     test "escaping delimiters" do
-      assert T.tokenize("{{foo}} \\{{bar}} {{baz}}") == 
-          { :ok, [{:mustache, 1, 'foo'},  {:text, ' {{bar}} '}, {:mustache, 1, 'baz'}] }
+      assert T.tokenize("{{foo}} \\{{bar}} {{baz}}") == { :ok, [
+        {:mustache, 1, 'foo'},  
+        {:text, ' {{bar}} '}, 
+        {:mustache, 1, 'baz'} ]}
     end
+
+    # TODO : more escape tests
+
+
+    # test "simple path" do
+    #   assert T.tokenize("{{foo/bar}}") == {:ok, [
+    #     {:mustache, 1, {:path,'foo/bar'}}
+    #     ]}
+    # end
+
+
+
+    
 end

@@ -4,14 +4,18 @@ defmodule HandlebarsTest do
 
   # import Handlebars.Parser
 
-  # test "most basic" do
-  #   should_compile_to( "{{foo}}", %{ "foo" => "foo"}, "foo" )
-  # end
+
+  test "most basic" do
+    # assert Handlebars.eval_string( "poop", %{}) == {:ok}
+
+    # assert_eval("{{foo}}", %{ "foo" => "bar"}) == {:ok,"bar")
+  end
 
 
-  # def should_compile_to( source, data, expected ) do
+  # defp assert_eval( source, data, expected ) do
   #     # template = Handlebars.compile(source)
-  #     result = Handlebars.execute(source, data)
-  #     assert result == {:ok, expected}
+  #     # Handlebars.eval_string(source, data)
+  #     # assert result == {:ok, expected}
+  #     {:ok}
   # end
 end
